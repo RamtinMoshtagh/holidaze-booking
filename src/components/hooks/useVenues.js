@@ -1,6 +1,6 @@
 // src/hooks/useVenues.js
 import { useState, useEffect } from 'react';
-import api from '../../services/Api';  // Adjust the import path as needed
+import api from '../../services/Api';
 
 const useVenues = () => {
   const [venues, setVenues] = useState([]);
@@ -13,7 +13,7 @@ const useVenues = () => {
       setError(null);
       try {
         const response = await api.get('/holidaze/venues');
-        setVenues(response.data.data); // assuming the data is wrapped inside a data object
+        setVenues(response.data.data);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch venues: ' + err.message);

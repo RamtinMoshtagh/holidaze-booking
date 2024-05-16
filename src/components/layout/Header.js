@@ -1,7 +1,6 @@
-// src/components/layout/Header.js
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from '../common/Navigation'; // Adjust the path as necessary
+import Navigation from '../common/Navigation';
 
 const HeaderContainer = styled.header`
   background-color: #f8f9fa;
@@ -9,6 +8,7 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; // Ensures the header is on top
 `;
 
 const Header = () => {
