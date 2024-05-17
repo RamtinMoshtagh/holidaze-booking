@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import login from '../../services/Login'; // Ensure this path is correct and the function is properly exported
+import { useAuth } from '../hooks/AuthContext';
+import { login as loginService } from '../../services/Login';
+
 
 const Container = styled.div`
   max-width: 500px;
-  width: 100%; // Ensures it uses the full available width on smaller screens
   margin: 40px auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 8px;
   background-color: #fff;
-
   @media (max-width: 768px) {
-    max-width: 90%; // More responsive for smaller screens
+    max-width: 90%;
     padding: 15px;
   }
 `;
@@ -26,38 +26,27 @@ const Form = styled.form`
 `;
 
 const Label = styled.label`
-  margin-bottom: 10px; // Slightly larger spacing for readability
+  margin-bottom: 10px;
 `;
 
 const StyledInput = styled(Input)`
-  width: 100%; // Full width to use the available space
-  padding: 12px; // Better padding for easier interaction
+  width: 100%;
+  padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
-
   &:focus {
-    border-color: #0077cc; // Blue border on focus for better visibility
-    outline: none; // Removes default focus outline
+    border-color: #0077cc;
+    outline: none;
   }
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 20px; // Increased spacing between form groups
+  margin-bottom: 20px;
 `;
 
 const ErrorMsg = styled.p`
   color: red;
-  font-size: 0.9rem; // Smaller font size for error messages
-`;
-
-const StyledLink = styled(Link)`
-  display: block;
-  margin-top: 20px;
-  color: #0077cc;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
+  font-size: 0.9rem;
 `;
 
 const Login = () => {
@@ -65,6 +54,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -74,16 +64,10 @@ const Login = () => {
     }
 
     try {
-      const data = await login(email, password);
-      if (data.accessToken) {
-        localStorage.setItem('token', data.accessToken);
-        navigate(data.venueManager ? '/admin' : '/'); // Adjust navigation based on user role
-      } else {
-        throw new Error('No access token received');
-      }
+      await login(email, password, loginService);
+      navigate('/profile');
     } catch (error) {
-      console.error("Login failed:", error);
-      setError(error.message || 'Failed to login');
+      setError('Failed to login: ' + error.message);
     }
   };
 
@@ -93,15 +77,14 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Email</Label>
-          <StyledInput type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" />
+          <StyledInput type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" required />
         </FormGroup>
         <FormGroup>
           <Label>Password</Label>
-          <StyledInput type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" />
+          <StyledInput type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" required />
         </FormGroup>
         <Button type="submit">Login</Button>
         {error && <ErrorMsg>{error}</ErrorMsg>}
-        <StyledLink to="/register">Don't have an account? Register Here</StyledLink>
       </Form>
     </Container>
   );

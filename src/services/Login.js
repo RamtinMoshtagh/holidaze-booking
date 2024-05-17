@@ -1,16 +1,25 @@
-// src/services/login.js
 import api from './Api';
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
   try {
-    const response = await api.post('/auth/login', { email, password });
-    // Check the response status and data structure
-    if (response.status === 200 && response.data && response.data.data.accessToken) {
-      return response.data.data;  // Assuming that the response structure includes a nested 'data' object
+    const response = await api.post('/auth/login', {
+      email: email,
+      password: password
+    });
+    if (response.status === 200 && response.data) {
+      const { accessToken, venueManager = false, name, email, avatar, banner } = response.data.data || {};
+      return {
+        accessToken,
+        venueManager,  // Include venueManager in the user data
+        userDetails: {
+          name,
+          email,
+          avatar,
+          banner
+        }
+      };
     } else {
-      // Log and throw an error if no access token is found
-      console.error("No access token received, response data:", response.data);
-      throw new Error('No access token received');
+      throw new Error('Login successful but no access token received.');
     }
   } catch (error) {
     console.error("Login failed:", error);

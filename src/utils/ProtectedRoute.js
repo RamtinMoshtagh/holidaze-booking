@@ -1,16 +1,11 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthContext'; // Ensure path correctness
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const token = localStorage.getItem('token');
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
 
-    return (
-        <Route {...rest} render={
-            props => token
-                ? <Component {...props} />
-                : <Redirect to='/login' />
-        } />
-    );
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

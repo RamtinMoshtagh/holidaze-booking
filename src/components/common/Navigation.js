@@ -76,6 +76,7 @@ const Navigation = () => {
         <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
         <NavLink to="/venues" onClick={() => setIsMenuOpen(false)}>Venues</NavLink>
         <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
+        <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink> {/* Added register NavLink */}
         <NavLink to="/admin" onClick={() => setIsMenuOpen(false)}>Admin</NavLink>
       </NavLinksContainer>
     </Nav>
