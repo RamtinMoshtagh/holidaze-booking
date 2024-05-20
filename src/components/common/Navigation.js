@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAuth } from '../hooks/AuthContext';
 
 const Nav = styled.nav`
   background-color: #fff;
@@ -19,7 +20,7 @@ const NavLinksContainer = styled.div`
   left: 0;
   right: 0;
   transition: all 0.3s ease-in-out;
-  z-index: 10; // Ensure it appears over other content
+  z-index: 10;
 
   @media (min-width: 769px) {
     display: flex;
@@ -34,8 +35,7 @@ const NavLink = styled(Link)`
   text-decoration: none;
   padding: 1em;
   display: block;
-  width: 100%; // Full width links for better mobile experience
-  text-align: center;
+  width: 100%;
 
   &:hover, &:focus {
     background-color: #f8f9fa;
@@ -44,7 +44,19 @@ const NavLink = styled(Link)`
 
   @media (min-width: 769px) {
     padding: 0.5em 1em;
-    width: auto; // Auto width on desktop
+    width: auto;
+  }
+`;
+
+const LogoutLink = styled.button`
+  background: none;
+  border: none;
+  padding: 1em;
+  color: #007bff;
+  cursor: pointer;
+
+  &:hover {
+    color: #0056b3;
   }
 `;
 
@@ -56,15 +68,21 @@ const MenuIcon = styled.button`
   display: block;
 
   @media (min-width: 769px) {
-    display: none; // Hide button on larger screens
+    display: none;
   }
 `;
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -73,11 +91,19 @@ const Navigation = () => {
         {isMenuOpen ? '✖' : '☰'}
       </MenuIcon>
       <NavLinksContainer $show={isMenuOpen}>
-        <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
-        <NavLink to="/venues" onClick={() => setIsMenuOpen(false)}>Venues</NavLink>
-        <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
-        <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink> {/* Added register NavLink */}
-        <NavLink to="/admin" onClick={() => setIsMenuOpen(false)}>Admin</NavLink>
+        {isAuthenticated ? (
+          <>
+            <NavLink to="/venues" onClick={() => setIsMenuOpen(false)}>Venues</NavLink>
+            <NavLink to="/profile" onClick={() => setIsMenuOpen(false)}>Profile</NavLink>
+            <NavLink to="/admin" onClick={() => setIsMenuOpen(false)}>Admin</NavLink>
+            <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
+            <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink>
+          </>
+        )}
       </NavLinksContainer>
     </Nav>
   );

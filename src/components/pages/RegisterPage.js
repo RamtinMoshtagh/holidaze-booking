@@ -79,7 +79,7 @@ const Register = () => {
     password: '',
     venueManager: false,
     avatar: {
-      url: 'https://gravatar.com/avatar/36985745d7c2910507e598e17cecfd9a?s=400&d=robohash&r=x',
+      url: '',
       alt: 'Default Avatar'
     }
   });
@@ -108,7 +108,7 @@ const Register = () => {
         }
         break;
       case 'avatar.url':
-        if (!/^https:\/\/gravatar\.com\/avatar\/[a-f0-9]{32}\?s=400&d=robohash&r=x$/.test(value)) {
+        if (value && !/^https:\/\/gravatar\.com\/avatar\/[a-f0-9]{32}\?s=400&d=robohash&r=x$/.test(value)) {
           return 'Avatar URL must be a valid Gravatar URL';
         }
         break;
@@ -119,10 +119,23 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    const updatedValue = type === 'checkbox' ? checked : value;
+    const [field, subfield] = name.split('.');
+
+    if (subfield) {
+      setFormData(prev => ({
+        ...prev,
+        [field]: {
+          ...prev[field],
+          [subfield]: updatedValue
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: updatedValue
+      }));
+    }
 
     const error = validateInput(name, value);
     setErrors(prev => ({
@@ -149,13 +162,19 @@ const Register = () => {
       return;
     }
 
+    // If no avatar URL provided, set the default one
+    const avatarUrl = formData.avatar.url || 'https://gravatar.com/avatar/36985745d7c2910507e598e17cecfd9a?s=400&d=robohash&r=x';
+
     try {
       const response = await api.post('/auth/register', {
         name: formData.name,
         email: formData.email,
         password: formData.password,
         venueManager: formData.venueManager,
-        avatar: formData.avatar
+        avatar: {
+          url: avatarUrl,
+          alt: 'Default Avatar'
+        }
       });
       if (response.status === 201) {
         console.log('Registration successful:', response.data);
@@ -187,7 +206,7 @@ const Register = () => {
           </FormGroup>
         ))}
         <FormGroup>
-          <Label>Avatar URL</Label>
+          <Label>Avatar URL (optional)</Label>
           <StyledInput
             type="text"
             name="avatar.url"
