@@ -8,13 +8,18 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; // Ensures the header is on top
+`;
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  color: #333;
+  margin: 0;
 `;
 
 const Header = () => {
   return (
     <HeaderContainer>
-      <h1>Holidaze</h1>
+      <Title>Holidaze</Title>
       <Navigation />
     </HeaderContainer>
   );

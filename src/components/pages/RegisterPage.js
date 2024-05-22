@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../../services/Api';
+import registerUser from '../../services/Register'; // Import the function
 import styled from 'styled-components';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -166,7 +166,7 @@ const Register = () => {
     const avatarUrl = formData.avatar.url || 'https://gravatar.com/avatar/36985745d7c2910507e598e17cecfd9a?s=400&d=robohash&r=x';
 
     try {
-      const response = await api.post('/auth/register', {
+      const userData = {
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -175,12 +175,14 @@ const Register = () => {
           url: avatarUrl,
           alt: 'Default Avatar'
         }
-      });
-      if (response.status === 201) {
-        console.log('Registration successful:', response.data);
-        navigate(formData.venueManager ? '/admin' : '/profile'); // Redirect based on the role
-      } else {
-        throw new Error('Failed to register');
+      };
+
+      console.log('Registering user with data:', userData); // Debugging log
+      const response = await registerUser(userData); // Use the registerUser function
+      if (response) {
+        console.log('Registration successful:', response);
+        // Redirect to login after successful registration
+        navigate('/login');
       }
     } catch (error) {
       console.error('Registration Error:', error);

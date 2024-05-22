@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import { useAuth } from '../hooks/AuthContext';
 import { login as loginService } from '../../services/Login';
-
 
 const Container = styled.div`
   max-width: 500px;
@@ -53,7 +51,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (event) => {
@@ -65,9 +62,8 @@ const Login = () => {
 
     try {
       await login(email, password, loginService);
-      navigate('/profile');
     } catch (error) {
-      setError('Failed to login: ' + error.message);
+      setError('Failed to login: ' + (error.response?.data?.message || error.message));
     }
   };
 

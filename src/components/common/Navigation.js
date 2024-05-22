@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../hooks/AuthContext';
 
 const Nav = styled.nav`
-  background-color: #fff;
-  padding: 0.5rem 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const NavLinksContainer = styled.div`
-  display: ${props => props.$show ? 'flex' : 'none'};
+  display: ${props => (props.$show ? 'flex' : 'none')};
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.9);
   position: absolute;
-  top: 100%;
+  top: 60px;
   left: 0;
   right: 0;
   transition: all 0.3s ease-in-out;
@@ -27,24 +24,32 @@ const NavLinksContainer = styled.div`
     flex-direction: row;
     position: static;
     background: none;
+    top: auto;
+    margin-left: auto;
   }
 `;
 
 const NavLink = styled(Link)`
-  color: #007bff;
+  color: #fff;
   text-decoration: none;
   padding: 1em;
   display: block;
   width: 100%;
 
   &:hover, &:focus {
-    background-color: #f8f9fa;
-    color: #0056b3;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
   }
 
   @media (min-width: 769px) {
+    color: #007bff;
     padding: 0.5em 1em;
     width: auto;
+
+    &:hover, &:focus {
+      background-color: #f8f9fa;
+      color: #0056b3;
+    }
   }
 `;
 
@@ -52,11 +57,22 @@ const LogoutLink = styled.button`
   background: none;
   border: none;
   padding: 1em;
-  color: #007bff;
+  color: #fff;
   cursor: pointer;
+  text-align: left;
 
   &:hover {
-    color: #0056b3;
+    color: #d4d4d4;
+  }
+
+  @media (min-width: 769px) {
+    padding: 0.5em 1em;
+    text-align: center;
+    color: #007bff;
+
+    &:hover {
+      color: #0056b3;
+    }
   }
 `;
 
@@ -74,7 +90,8 @@ const MenuIcon = styled.button`
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -94,14 +111,14 @@ const Navigation = () => {
         {isAuthenticated ? (
           <>
             <NavLink to="/venues" onClick={() => setIsMenuOpen(false)}>Venues</NavLink>
+            {user?.venueManager && <NavLink to="/admin" onClick={() => setIsMenuOpen(false)}>Admin</NavLink>}
             <NavLink to="/profile" onClick={() => setIsMenuOpen(false)}>Profile</NavLink>
-            <NavLink to="/admin" onClick={() => setIsMenuOpen(false)}>Admin</NavLink>
             <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
           </>
         ) : (
           <>
-            <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
-            <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink>
+            {location.pathname !== '/login' && <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>}
+            {location.pathname !== '/register' && <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink>}
           </>
         )}
       </NavLinksContainer>

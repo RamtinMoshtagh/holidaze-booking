@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthContext'; // Ensure this path is correct
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import api from '../../services/Api'; // Adjust this path to your API service
+import UpcomingBookings from '../common/UpcomingBookings'; // Ensure the correct path
 
 const ProfileContainer = styled.div`
   padding: 20px;
@@ -35,6 +36,10 @@ const Input = styled.input`
   width: 70%;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 `;
 
 const Button = styled.button`
@@ -54,6 +59,13 @@ const Button = styled.button`
 const ProfilePage = () => {
   const { user, isAuthenticated, token, updateUserAvatar } = useAuth(); // Ensure token and updateUserAvatar are accessible here
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login'); // Redirect unauthenticated users to the login page
+    }
+  }, [isAuthenticated, navigate]);
 
   const updateAvatar = async (avatarUrl) => {
     const username = user?.name; // Ensure 'user' is defined and has a name property
@@ -103,9 +115,6 @@ const ProfilePage = () => {
       <ProfileDetail>Name: {user.name}</ProfileDetail>
       <ProfileDetail>Email: {user.email}</ProfileDetail>
       {user.bio && <ProfileDetail>Bio: {user.bio}</ProfileDetail>}
-      {user.isVenueManager && (
-        <ProfileDetail>Manage your venues and bookings <Link to="/manage">here</Link>.</ProfileDetail>
-      )}
       <Input
         type="text"
         value={newAvatarUrl}
@@ -113,6 +122,7 @@ const ProfilePage = () => {
         placeholder="Enter new avatar URL"
       />
       <Button onClick={() => updateAvatar(newAvatarUrl)}>Update Avatar</Button>
+      <UpcomingBookings />
     </ProfileContainer>
   );
 };

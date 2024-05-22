@@ -1,3 +1,4 @@
+// Button.js
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -7,6 +8,9 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 10px 5px 10px 0; // Ensure space around buttons
+  
   &:hover {
     background-color: #0056b3;
   }

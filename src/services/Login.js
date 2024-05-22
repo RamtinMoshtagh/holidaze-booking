@@ -3,19 +3,26 @@ import api from './Api';
 export const login = async (email, password) => {
   try {
     const response = await api.post('/auth/login', {
-      email: email,
-      password: password
+      email,
+      password
+    }, {
+      params: {
+        _holidaze: true
+      }
     });
+    
     if (response.status === 200 && response.data) {
-      const { accessToken, venueManager = false, name, email, avatar, banner } = response.data.data || {};
+      console.log('Login response data:', response.data); // Debugging log
+      const { accessToken, name, email: userEmail, avatar, banner, venueManager } = response.data.data || {};
+      
       return {
         accessToken,
-        venueManager,  // Include venueManager in the user data
         userDetails: {
           name,
-          email,
+          email: userEmail,
           avatar,
-          banner
+          banner,
+          venueManager: venueManager || false
         }
       };
     } else {

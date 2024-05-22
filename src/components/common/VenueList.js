@@ -1,5 +1,5 @@
+// src/components/common/VenueList.js
 import React from 'react';
-import useVenues from '../hooks/useVenues';
 import styled from 'styled-components';
 import VenueCard from './VenueCard'; // Ensure the path is correct
 
@@ -11,10 +11,7 @@ const ListContainer = styled.div`
   gap: 20px; /* Ensures consistent spacing regardless of screen size */
 `;
 
-const VenueList = () => {
-  const { venues, loading, error } = useVenues();
-
-  if (loading) return <p>Loading venues...</p>;
+const VenueList = ({ venues, error }) => {
   if (error) return <p>Error loading venues: {error}</p>;
 
   return (

@@ -1,7 +1,10 @@
+// src/components/pages/VenueDetails.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import VenueCalendar from '../common/VenueCalender';
+import CreateBooking from '../common/CreateBooking'; // Ensure the path is correct
 
 const DetailsContainer = styled.div`
   padding: 20px;
@@ -156,6 +159,8 @@ const VenueDetails = () => {
             ))}
           </BookingInfo>
         )}
+        <VenueCalendar venueId={id} />
+        <CreateBooking venueId={id} />
       </DetailsCard>
     </DetailsContainer>
   );
