@@ -44,7 +44,7 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/holidaze.git
+   git clone [https://github.com/RamtinMoshtagh/holidaze-booking]
    cd holidaze-booking
 2. Install the dependencies:
     ```sh
@@ -84,6 +84,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 ### Project Structure
 Here's a brief overview of the project's structure:
+```
 holidaze/
 ├── public/
 ├── src/
@@ -99,6 +100,7 @@ holidaze/
 ├── package.json
 ├── README.md
 └── ...
+```
 
 ### Style Guide
 To maintain a consistent design across the application, refer to the Style Guide for details on color palettes, typography, spacing, and more.
