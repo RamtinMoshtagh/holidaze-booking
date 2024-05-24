@@ -7,6 +7,27 @@ import styled from 'styled-components';
 const CalendarContainer = styled.div`
   padding: 20px;
   text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h1`
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #333;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 16px;
+`;
+
+const LoadingMessage = styled.p`
+  color: #007bff;
+  font-size: 16px;
 `;
 
 const VenueCalendar = ({ venueId }) => {
@@ -35,9 +56,9 @@ const VenueCalendar = ({ venueId }) => {
 
   return (
     <CalendarContainer>
-      <h1>Available Dates</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      <Title>Available Dates</Title>
+      {loading && <LoadingMessage>Loading...</LoadingMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       {!loading && !error && (
         <Calendar
           tileDisabled={({ date }) => bookedDates.some(d => d.getTime() === date.getTime())}

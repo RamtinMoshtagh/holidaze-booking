@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import GlobalStyles from './styles/GlobalStyles';
 import { AuthProvider } from './components/hooks/AuthContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -13,11 +12,14 @@ import ProfilePage from './components/pages/ProfilePage';
 import ProtectedRoute from './utils/ProtectedRoute';
 import RoleBasedRoute from './utils/RoleBasedRoute';
 
+/**
+ * The main application component with routing.
+ * @returns {JSX.Element} The application component.
+ */
 const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <GlobalStyles />
         <Header />
         <main>
           <Routes>

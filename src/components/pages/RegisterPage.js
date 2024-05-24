@@ -27,6 +27,8 @@ const Form = styled.form`
 
 const Label = styled.label`
   margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
 `;
 
 const StyledInput = styled(Input)`
@@ -51,7 +53,7 @@ const CheckboxLabel = styled.label`
   margin-top: 5px;
 `;
 
-const Checkbox = styled(Input)`
+const Checkbox = styled.input`
   margin-right: 10px;
 `;
 
@@ -203,6 +205,7 @@ const Register = () => {
               value={formData[field]}
               onChange={handleChange}
               placeholder={`Enter your ${field}`}
+              required
             />
             {errors[field] && <ErrorMsg>{errors[field]}</ErrorMsg>}
           </FormGroup>

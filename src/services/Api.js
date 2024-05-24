@@ -11,6 +11,10 @@ const api = axios.create({
   }
 });
 
+/**
+ * Sets the authorization token for API requests.
+ * @param {string} token - The authorization token.
+ */
 export const setAuthToken = (token) => {
   if (token) {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -19,6 +23,10 @@ export const setAuthToken = (token) => {
   }
 };
 
+/**
+ * Sets the API key for API requests.
+ * @param {string} key - The API key.
+ */
 export const setApiKey = (key) => {
   if (key) {
     api.defaults.headers.common['X-Noroff-API-Key'] = key;
@@ -27,12 +35,13 @@ export const setApiKey = (key) => {
   }
 };
 
-// Intercept requests and responses to log them
+// Intercept requests and log them
 api.interceptors.request.use(request => {
   console.log('Starting Request', request);
   return request;
 });
 
+// Intercept responses and log them
 api.interceptors.response.use(response => {
   console.log('Response:', response);
   return response;

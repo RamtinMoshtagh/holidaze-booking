@@ -8,6 +8,10 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 `;
 
 const Title = styled.h1`
@@ -18,7 +22,7 @@ const Title = styled.h1`
 
 const Header = () => {
   return (
-    <HeaderContainer>
+    <HeaderContainer aria-label="Header">
       <Title>Holidaze</Title>
       <Navigation />
     </HeaderContainer>

@@ -12,6 +12,7 @@ const Container = styled.div`
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 8px;
   background-color: #fff;
+
   @media (max-width: 768px) {
     max-width: 90%;
     padding: 15px;
@@ -25,6 +26,8 @@ const Form = styled.form`
 
 const Label = styled.label`
   margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
 `;
 
 const StyledInput = styled(Input)`
@@ -32,6 +35,7 @@ const StyledInput = styled(Input)`
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
+
   &:focus {
     border-color: #0077cc;
     outline: none;
@@ -45,6 +49,7 @@ const FormGroup = styled.div`
 const ErrorMsg = styled.p`
   color: red;
   font-size: 0.9rem;
+  margin-top: 10px;
 `;
 
 const Login = () => {
@@ -73,11 +78,23 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Email</Label>
-          <StyledInput type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" required />
+          <StyledInput 
+            type="email" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+            placeholder="Enter your email" 
+            required 
+          />
         </FormGroup>
         <FormGroup>
           <Label>Password</Label>
-          <StyledInput type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" required />
+          <StyledInput 
+            type="password" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            placeholder="Enter your password" 
+            required 
+          />
         </FormGroup>
         <Button type="submit">Login</Button>
         {error && <ErrorMsg>{error}</ErrorMsg>}

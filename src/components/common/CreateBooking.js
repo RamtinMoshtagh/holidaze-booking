@@ -9,14 +9,30 @@ const BookingForm = styled.form`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 15px;
+  width: 100%;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 `;
 
 const Input = styled.input`
-  margin: 10px;
+  margin: 10px 0;
   padding: 10px;
-  width: 300px;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
     width: 90%;
@@ -40,6 +56,16 @@ const Button = styled.button`
     background-color: #aaa;
     cursor: not-allowed;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  margin-top: 10px;
+`;
+
+const SuccessMessage = styled.p`
+  color: green;
+  margin-top: 10px;
 `;
 
 const CreateBooking = ({ venueId }) => {
@@ -78,33 +104,42 @@ const CreateBooking = ({ venueId }) => {
   return (
     <BookingForm onSubmit={handleSubmit}>
       <h2>Create Booking</h2>
-      <Input
-        type="date"
-        value={dateFrom}
-        onChange={(e) => setDateFrom(e.target.value)}
-        placeholder="From Date"
-        required
-      />
-      <Input
-        type="date"
-        value={dateTo}
-        onChange={(e) => setDateTo(e.target.value)}
-        placeholder="To Date"
-        required
-      />
-      <Input
-        type="number"
-        value={guests}
-        onChange={(e) => setGuests(e.target.value)}
-        placeholder="Guests"
-        min="1"
-        required
-      />
+      <FormGroup>
+        <Label htmlFor="dateFrom">From Date</Label>
+        <Input
+          type="date"
+          id="dateFrom"
+          value={dateFrom}
+          onChange={(e) => setDateFrom(e.target.value)}
+          required
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label htmlFor="dateTo">To Date</Label>
+        <Input
+          type="date"
+          id="dateTo"
+          value={dateTo}
+          onChange={(e) => setDateTo(e.target.value)}
+          required
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label htmlFor="guests">Guests</Label>
+        <Input
+          type="number"
+          id="guests"
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+          min="1"
+          required
+        />
+      </FormGroup>
       <Button type="submit" disabled={loading}>
         {loading ? 'Booking...' : 'Create Booking'}
       </Button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {success && <SuccessMessage>{success}</SuccessMessage>}
     </BookingForm>
   );
 };

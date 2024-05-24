@@ -8,6 +8,11 @@ import UpcomingBookings from '../common/UpcomingBookings'; // Ensure the correct
 const ProfileContainer = styled.div`
   padding: 20px;
   text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const ProfileImage = styled.img`
@@ -23,6 +28,7 @@ const ProfileBanner = styled.img`
   height: 200px;
   object-fit: cover;
   margin-bottom: 20px;
+  border-radius: 8px;
 `;
 
 const ProfileDetail = styled.p`
@@ -56,9 +62,16 @@ const Button = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 10px;
+`;
+
 const ProfilePage = () => {
   const { user, isAuthenticated, token, updateUserAvatar } = useAuth(); // Ensure token and updateUserAvatar are accessible here
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,7 +83,7 @@ const ProfilePage = () => {
   const updateAvatar = async (avatarUrl) => {
     const username = user?.name; // Ensure 'user' is defined and has a name property
     if (!username) {
-      alert('User identifier is required for this operation.');
+      setError('User identifier is required for this operation.');
       return;
     }
 
@@ -89,12 +102,14 @@ const ProfilePage = () => {
       if (response.status === 200) {
         alert('Avatar updated successfully!');
         updateUserAvatar(avatarUrl); // Update the avatar in the context
+        setNewAvatarUrl(''); // Clear the input field
+        setError('');
       } else {
         throw new Error('Unexpected response from the server');
       }
     } catch (error) {
       console.error("Failed to update avatar:", error);
-      alert('Failed to update avatar: ' + error.message);
+      setError('Failed to update avatar: ' + error.message);
     }
   };
 
@@ -122,6 +137,7 @@ const ProfilePage = () => {
         placeholder="Enter new avatar URL"
       />
       <Button onClick={() => updateAvatar(newAvatarUrl)}>Update Avatar</Button>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <UpcomingBookings />
     </ProfileContainer>
   );

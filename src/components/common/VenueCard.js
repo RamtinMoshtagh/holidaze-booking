@@ -52,8 +52,8 @@ const VenueCard = ({ venue }) => {
   };
 
   return (
-    <Card onClick={handleClick}>
-      <VenueImage src={venue.media[0]?.url} alt={venue.media[0]?.alt} />
+    <Card onClick={handleClick} role="button" tabIndex={0} onKeyPress={(e) => { if (e.key === 'Enter') handleClick(); }}>
+      <VenueImage src={venue.media[0]?.url} alt={venue.media[0]?.alt || 'Venue image'} />
       <VenueTitle>{venue.name}</VenueTitle>
       <VenueDescription>{venue.description}</VenueDescription>
     </Card>
