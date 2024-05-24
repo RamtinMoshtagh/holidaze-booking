@@ -8,7 +8,6 @@ const createApiKey = async () => {
   try {
     const token = localStorage.getItem('token'); // Ensure token is present
     if (!token) {
-      console.log("No token available.");
       return null;
     }
 
@@ -18,7 +17,6 @@ const createApiKey = async () => {
       name: "My New API Key" // Optional
     });
 
-    console.log("API Key creation response:", response.data); // Log the response data from server
     return response.data;
   } catch (error) {
     console.error("Error creating API key:", error.response ? error.response.data : error.message);

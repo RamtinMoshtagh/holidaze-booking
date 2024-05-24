@@ -34,7 +34,6 @@ const AdminPage = () => {
     const fetchVenues = async () => {
       try {
         setLoading(true);
-        console.log(`Fetching venues for profile: ${user.name}`);
         const data = await getVenuesByProfile(user.name);
         setVenues(data || []);
         localStorage.setItem('venues', JSON.stringify(data || []));
@@ -93,7 +92,6 @@ const AdminPage = () => {
 
   const handleViewBookings = async (venueId, venueTitle) => {
     try {
-      console.log(`Fetching bookings for venue: ${venueId}`);
       const allBookings = await getBookingsForProfile(user.name);
       const venueBookings = allBookings.filter(booking => booking.venue.id === venueId);
       setSelectedVenue(venueId);

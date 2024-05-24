@@ -19,7 +19,6 @@ export const login = async (email, password) => {
     });
 
     if (response.status === 200 && response.data) {
-      console.log('Login response data:', response.data); // Debugging log
       const { accessToken, name, email: userEmail, avatar, banner, venueManager } = response.data.data || {};
 
       return {

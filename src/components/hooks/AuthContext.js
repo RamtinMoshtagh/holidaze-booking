@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }) => {
       if (userData && userData.accessToken) {
         const { name, email, avatar, banner, venueManager } = userData.userDetails;
         const userDetails = { name, email, avatar, banner, venueManager };
-        console.log('Login successful:', userDetails); // Debugging log
         setUser(userDetails);
         setToken(userData.accessToken);
         localStorage.setItem('user', JSON.stringify(userDetails));
@@ -72,10 +71,8 @@ export const AuthProvider = ({ children }) => {
 
         // Debugging log for role-based redirection
         if (venueManager) {
-          console.log('Redirecting to Admin');
           navigate('/admin');
         } else {
-          console.log('Redirecting to Profile');
           navigate('/profile');
         }
       } else {

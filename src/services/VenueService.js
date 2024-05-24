@@ -55,7 +55,6 @@ export const deleteVenue = async (id) => {
  */
 export const getVenuesByProfile = async (profileName) => {
   try {
-    console.log(`Fetching venues for profile: ${profileName}`);
     const response = await api.get(`/holidaze/profiles/${profileName}/venues`, {
       params: {
         _owner: true,

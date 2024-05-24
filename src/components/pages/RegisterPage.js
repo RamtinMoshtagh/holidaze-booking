@@ -179,10 +179,8 @@ const Register = () => {
         }
       };
 
-      console.log('Registering user with data:', userData); // Debugging log
       const response = await registerUser(userData); // Use the registerUser function
       if (response) {
-        console.log('Registration successful:', response);
         // Redirect to login after successful registration
         navigate('/login');
       }

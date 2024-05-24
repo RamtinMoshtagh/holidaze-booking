@@ -37,13 +37,11 @@ export const setApiKey = (key) => {
 
 // Intercept requests and log them
 api.interceptors.request.use(request => {
-  console.log('Starting Request', request);
   return request;
 });
 
 // Intercept responses and log them
 api.interceptors.response.use(response => {
-  console.log('Response:', response);
   return response;
 }, error => {
   console.error('Error:', error.response ? error.response.data : error.message);
