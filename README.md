@@ -98,7 +98,7 @@ holidaze/
 ├── .gitignore
 ├── package.json
 ├── README.md
-└── ...
+└── ```
 
 ### Style Guide
 To maintain a consistent design across the application, refer to the Style Guide for details on color palettes, typography, spacing, and more.
