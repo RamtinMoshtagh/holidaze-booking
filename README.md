@@ -3,6 +3,8 @@
 Holidaze is a comprehensive booking platform designed to facilitate seamless holiday planning.
 Check it out here: https://holidazey.netlify.app 
 
+![Screenshot 2024-06-04 at 10 53 49](https://github.com/RamtinMoshtagh/holidaze-booking/assets/95631899/d8766f40-a93d-4ccb-a5d4-e23fd8ca3aa8)
+
 # Description
 Holidaze is a comprehensive booking platform designed to facilitate seamless holiday planning and accommodation bookings. This project provides users with an intuitive interface to browse, book, and manage their holiday accommodations.
 - User authentication and authorization
