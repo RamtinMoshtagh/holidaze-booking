@@ -1,35 +1,19 @@
 # Holidaze
 
+Holidaze is a comprehensive booking platform designed to facilitate seamless holiday planning.
+Check it out here: https://holidazey.netlify.app 
+
+# Description
 Holidaze is a comprehensive booking platform designed to facilitate seamless holiday planning and accommodation bookings. This project provides users with an intuitive interface to browse, book, and manage their holiday accommodations.
-
-Check it out here: https://holidazey.netlify.app
-
-## Table of Contents
-
-- [Holidaze](#holidaze)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Available Scripts](#available-scripts)
-      - [`npm start`](#npm-start)
-      - [`npm test`](#npm-test)
-      - [`npm run build`](#npm-run-build)
-      - [`npm run eject`](#npm-run-eject)
-  - [Project Structure](#project-structure)
-  - [Style Guide](#style-guide)
-  - [Testing](#testing)
-  - [Contributing](#contributing)
-  - [License](#license)
-
-## Features
-
 - User authentication and authorization
 - Browse available accommodations
 - Book and manage reservations
 - Profile management
 - Admin panel for venue managers
+
+# Built With
+- React.js
+- Styled-components
 
 ## Getting Started
 
@@ -125,7 +109,10 @@ If you would like to contribute to this project, please follow these steps:
 2. Create a new branch (`git checkout -b feature-branch`).
 3. Make your changes and commit them (`git commit -m 'Add some feature'`).
 4. Push to the branch (`git push origin feature-branch`).
-5. Open a Pull Request.
+5. Open a Pull Request. 
+
+### Contact
+https://www.linkedin.com/in/ramtin-moshtagh-4817a712a/
 
 ### License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
